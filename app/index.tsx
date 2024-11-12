@@ -69,8 +69,6 @@ export default function Index() {
 	};
 
 	const onPlayBtnPress = () => {
-		console.log("play button clicked");
-		console.log(typeof activeTurnP1);
 		if (activeTurnP1 === null) {
 			setActiveTurnP1(true);
 			setIsTimeRunningP1(true);
@@ -85,8 +83,6 @@ export default function Index() {
 	};
 
 	const onPauseBtnPress = () => {
-		console.log("pause button clicked");
-		console.log("activeTurnP1", activeTurnP1);
 		if (activeTurnP1) {
 			setIsTimeRunningP1(false);
 		} else {
@@ -107,13 +103,11 @@ export default function Index() {
 		if (!isTimeRunningP1 && !isTimeRunningP2) return;
 
 		if (activeTurnP1 && player === "player1") {
-			console.log("player1 clicked");
 			setPlayerTime1((prevTime) => prevTime + 5);
 			setIsTimeRunningP1(false);
 			setIsTimeRunningP2(true);
 			setActiveTurnP1(false);
 		} else if (activeTurnP1 === false && player === "player2") {
-			console.log("player2 clicked");
 			setPlayerTime2((prevTime) => prevTime + 5);
 			setIsTimeRunningP1(true);
 			setIsTimeRunningP2(false);
