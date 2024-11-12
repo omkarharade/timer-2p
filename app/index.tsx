@@ -34,6 +34,11 @@ export default function Index() {
 	const [activeTurnP1, setActiveTurnP1] = useState<Boolean | null>(null);
 
 	useEffect(() => {
+		if (playerTime1 === 0 || playerTime2 === 0) {
+			setIsTimeRunningP1(false);
+			setIsTimeRunningP2(false);
+			setActiveTurnP1(null);
+		}
 		let intervalId: any;
 		if (isTimeRunningP1) {
 			// setting time from 0 to 1 every 1 second using javascript setInterval method
@@ -127,11 +132,12 @@ export default function Index() {
 						onPress={() => {
 							onClockPress("player1");
 						}}
-						style={styles.playerOne}
+						style={[
+							styles.playerOne,
+							activeTurnP1 && activeTurnP1 ? styles.active : styles.inactive,
+						]}
 					>
-						<View>
-							<Text style={styles.text}>{formatTime(playerTime1)}</Text>
-						</View>
+						<Text style={styles.text}>{formatTime(playerTime1)}</Text>
 					</TouchableHighlight>
 
 					{/* control panel */}
@@ -153,14 +159,15 @@ export default function Index() {
 
 					{/* player 2 area */}
 					<TouchableHighlight
-						style={styles.playerTwo}
+						style={[
+							styles.playerTwo,
+							activeTurnP1 === false ? styles.active : styles.inactive,
+						]}
 						onPress={() => {
 							onClockPress("player2");
 						}}
 					>
-						<View>
-							<Text style={styles.text}>{formatTime(playerTime2)}</Text>
-						</View>
+						<Text style={styles.text}>{formatTime(playerTime2)}</Text>
 					</TouchableHighlight>
 				</View>
 			</SafeAreaView>
@@ -179,19 +186,23 @@ const styles = StyleSheet.create({
 	text: {
 		// Note the quoting of the value for `fontFamily` here; it expects a string!
 		fontFamily: "PressStart2P_400Regular",
-		fontSize: 24,
+		fontSize: 30,
 		paddingVertical: 6,
 	},
 	clockOutline: {
 		flex: 1,
-		width: "80%",
-		height: "80%",
+		width: "100%",
+		height: "100%",
+		paddingHorizontal: 10,
+		paddingVertical: 5,
 		alignItems: "center",
+		borderWidth: 2,
+		borderColor: "black",
+		backgroundColor: "indigo",
 	},
 	playerOne: {
 		flex: 5,
 		justifyContent: "center",
-		backgroundColor: "darkseagreen",
 		alignItems: "center",
 		width: "100%",
 		borderRadius: 15,
@@ -201,12 +212,20 @@ const styles = StyleSheet.create({
 	playerTwo: {
 		flex: 5,
 		justifyContent: "center",
-		backgroundColor: "slateblue",
+		// backgroundColor: "slateblue",
 		width: "100%",
 		alignItems: "center",
 		borderRadius: 15,
 		marginTop: 10,
 		marginBottom: 10,
+	},
+
+	inactive: {
+		backgroundColor: "steelblue",
+	},
+
+	active: {
+		backgroundColor: "palegoldenrod",
 	},
 
 	controls: {
